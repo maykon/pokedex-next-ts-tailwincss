@@ -1,15 +1,25 @@
-import Link from 'next/link'
-import Layout from '../components/Layout'
+import React from "react"
+import Container from "../components/Container"
+import PokemonList from "../components/PokemonList"
+import Title from "../components/Title"
+import getAllPokemons from "../services/api";
 
-const IndexPage = () => (
-  <Layout title="Home | Next.js + TypeScript Example">
-    <h1>Hello Next.js 👋</h1>
-    <p>
-      <Link href="/about">
-        <a>About</a>
-      </Link>
-    </p>
-  </Layout>
+const Pokedex = ({pokemons}) => (
+  <Container>
+    <Title>Pokedex</Title>
+    <PokemonList 
+      pokemons={pokemons}
+    />
+  </Container>
 )
 
-export default IndexPage
+export async function getStaticProps() {
+  const pokemons = await getAllPokemons();
+  return {
+    props: {
+      pokemons,
+    },
+  } 
+}
+
+export default Pokedex
